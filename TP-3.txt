@@ -1,0 +1,127 @@
+Windows PowerShell
+Copyright (C) Microsoft Corporation. Tous droits réservés.
+
+Installez la dernière version de PowerShell pour de nouvelles fonctionnalités et améliorations ! https://aka.ms/PSWindows
+
+PS C:\Users\XenceMaster> mariadb -h localhost -u root -p
+Enter password:
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MariaDB connection id is 19
+Server version: 11.3.2-MariaDB mariadb.org binary distribution
+
+Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+MariaDB [(none)]> use compta
+Database changed
+MariaDB [compta]> alter table article add constraint foreign key (id_fou) references fournisseur (id);
+ERROR 1072 (42000): La clé 'id_fou' n'existe pas dans la table
+MariaDB [compta]> alter table article add ( id_fou integer(10));
+Query OK, 0 rows affected (0.016 sec)
+Enregistrements: 0  Doublons: 0  Avertissements: 0
+
+MariaDB [compta]> alter table article add constraint foreign key (id_fou) references fournisseur (id);
+Query OK, 0 rows affected (0.016 sec)
+Enregistrements: 0  Doublons: 0  Avertissements: 0
+
+MariaDB [compta]> desk article
+    -> desk article;
+ERROR 1064 (42000): Erreur de syntaxe près de 'desk article
+desk article' à la ligne 1
+MariaDB [compta]> desk article;
+ERROR 1064 (42000): Erreur de syntaxe près de 'desk article' à la ligne 1
+MariaDB [compta]> desc article;
++-------------+--------------+------+-----+---------+-------+
+| Field       | Type         | Null | Key | Default | Extra |
++-------------+--------------+------+-----+---------+-------+
+| id          | int(10)      | NO   | PRI | NULL    |       |
+| ref         | varchar(13)  | YES  |     | NULL    |       |
+| designation | varchar(255) | YES  |     | NULL    |       |
+| prix        | decimal(7,0) | YES  |     | NULL    |       |
+| id_fou      | int(10)      | YES  | MUL | NULL    |       |
++-------------+--------------+------+-----+---------+-------+
+5 rows in set (0.006 sec)
+
+MariaDB [compta]> alter table bon add ( id_fou integer(10));
+Query OK, 0 rows affected (0.013 sec)
+Enregistrements: 0  Doublons: 0  Avertissements: 0
+
+MariaDB [compta]> alter table bon add constraint foreign key (id_fou) references fournisseur (id);
+Query OK, 0 rows affected (0.015 sec)
+Enregistrements: 0  Doublons: 0  Avertissements: 0
+
+MariaDB [compta]> alter table compo add ( id_art integer(10));
+Query OK, 0 rows affected (0.014 sec)
+Enregistrements: 0  Doublons: 0  Avertissements: 0
+
+MariaDB [compta]> alter table compo add constraint foreign key (id_art) references article (id);
+Query OK, 0 rows affected (0.018 sec)
+Enregistrements: 0  Doublons: 0  Avertissements: 0
+
+MariaDB [compta]> alter table compo add ( id_bon integer(10));
+Query OK, 0 rows affected (0.013 sec)
+Enregistrements: 0  Doublons: 0  Avertissements: 0
+
+MariaDB [compta]> alter table compo add constraint foreign key (id_bon) references bon (id);
+Query OK, 0 rows affected (0.013 sec)
+Enregistrements: 0  Doublons: 0  Avertissements: 0
+
+MariaDB [compta]> insert into fournisseur (id, nom) values (1, 'Francaise d'impots), (2, 'FDM SA'), (3, 'Dubois & Fils')
+;
+ERROR 1064 (42000): Erreur de syntaxe près de 'impots), (2, 'FDM SA'), (3, 'Dubois & Fils')' à la ligne 1
+MariaDB [compta]> insert into fournisseur (id, nom) values (1, 'Francaise d'impots);
+ERROR 1064 (42000): Erreur de syntaxe près de 'impots)' à la ligne 1
+MariaDB [compta]> insert into fournisseur (id, nom) values (1, 'Francaise d impots'), (2, 'FDM SA'), (3, 'Dubois & Fils'
+);
+Query OK, 3 rows affected (0.004 sec)
+Enregistrements: 3insert into article (id, ref, designation, prix, id_fou) values (1, 'A01', 'Perceuse P1', 74.99, 1);
+Query OK, 1 row affected, 1 warning (0.002 sec)
+MariaDB [compta]>                                                                                                       2, ';
+MariaDB [compta]> insert into article (id, ref, designation, prix, id_fou) values (2, 'F01', 'Boulon laiton 4 X 40 mm (sachet de 10), 2.25, 2), (3, 'F02', 'Boulon laiton 5 X 40 mm (sachet de 10), 4.45, 2)
+, (4, 'D01', 'Boulon laiton 5 X 40 mm (sachet de 10), 4.40, 3), (5, 'A02', 'Meuleuse 125mm, 37.85, 1), (6, 'D03', 'Boulon acier zingué 4 X 40mm (sachet de 10), 1.8, 3), (7, 'A03', 'Perceuse à colonne', 185.25, 1), (8, 'D04', 'Coffret meches à bois', 12.25, 3), (9, 'F03', 'offret meches plates', 6.25, 2), (10, 'F04', 'Fraises d'encastrement', 8.14, 2);
+ERROR 1064 (42000): Erreur de syntaxe près de 'F02', 'Boulon laiton 5 X 40 mm (sachet de 10), 4.45, 2), (4, 'D01', 'Boulon l...' à la ligne 1
+MariaDB [compta]> insert into article (id, ref, designation, prix, id_fou) values (2, 'F01', 'Boulon laiton 4 X 40 mm (sachet de 10)', 2.25, 2), (3, 'F02', 'Boulon laiton 5 X 40 mm (sachet de 10), 4.45, 2), (4, 'D01', 'Boulon laiton 5 X 40 mm (sachet de 10), 4.40, 3), (5, 'A02', 'Meuleuse 125mm, 37.85, 1), (6, 'D03', 'Boulon acier zingué 4 X 40mm (sachet de 10), 1.8, 3), (7, 'A03', 'Perceuse à colonne', 185.25, 1), (8, 'D04', 'Coffret meches à bois', 12.25, 3), (9, 'F03', 'offret meches plates', 6.25, 2), (10, 'F04', 'Fraises d'encastrement', 8.14, 2);
+    '> insert into article (id, ref, designation, prix, id_fou) values (2, 'F01', 'Boulon laiton 4 X 40 mm (sachet de 10)', 2.25, 2), (3, 'F02', 'Boulon laiton 5 X 40 mm (sachet de 10), 4.45, 2), (4, 'D01', 'Boulon laiton 5 X 40 mm (sachet de 10), 4.40, 3), (5, 'A02', 'Meuleuse 125mm, 37.85, 1), (6, 'D03', 'Boulon acier zingué 4 X 40mm (sachet de 10), 1.8, 3), (7, 'A03', 'Perceuse à colonne', 185.25, 1), (8, 'D04', 'Coffret meches à bois', 12.25, 3), (9, 'F03', 'offret meches plates', 6.25, 2), (10, 'F04', 'Fraises d'encastrement', 8.14, 2);
+ERROR 1064 (42000): Erreur de syntaxe près de 'D01', 'Boulon laiton 5 X 40 mm (sachet de 10), 4.40, 3), (5, 'A02', 'Meuleuse...' à la ligne 1
+MariaDB [compta]> insert into article (id, ref, designation, prix, id_fou) values (2, 'F01', 'Boulon laiton 4 X 40 mm (sachet de 10)', 2.25, 2), (3, 'F02', 'Boulon laiton 5 X 40 mm (sachet de 10)', 4.45,
+2), (4, 'D01', 'Boulon laiton 5 X 40 mm (sachet de 10)', 4.40, 3), (5, 'A02', 'Meuleuse 125mm', 37.85, 1), (6, 'D03', 'Boulon acier zingué 4 X 40mm (sachet de 10)', 1.8, 3), (7, 'A03', 'Perceuse à colonne
+', 185.25, 1), (8, 'D04', 'Coffret meches à bois', 12.25, 3), (9, 'F03', 'offret meches plates', 6.25, 2), (10, 'F04', 'Fraises d'encastrement', 8.14, 2);
+    '>
+    '> insert into article (id, ref, designation, prix, id_fou) values (2, 'F01', 'Boulon laiton 4 X 40 mm (sachet de 10)', 2.25, 2), (3, 'F02', 'Boulon laiton 5 X 40 mm (sachet de 10)', 4.45, 2), (4, 'D01', 'Boulon laiton 5 X 40 mm (sachet de 10)', 4.40, 3), (5, 'A02', 'Meuleuse 125mm', 37.85, 1), (6, 'D03', 'Boulon acier zingué 4 X 40mm (sachet de 10)', 1.8, 3), (7, 'A03', 'Perceuse à colonne', 185.25, 1), (8, 'D04', 'Coffret meches à bois', 12.25, 3), (9, 'F03', 'offret meches plates', 6.25, 2), (10, 'F04', 'Fraises d'encastrement', 8.14, 2);
+ERROR 1064 (42000): Erreur de syntaxe près de 'encastrement', 8.14, 2);
+
+insert into article (id, ref, designation, prix, id...' à la ligne 1
+MariaDB [compta]> insert into article (id, ref, designation, prix, id_fou) values (2, 'F01', 'Boulon laiton 4 X 40 mm (sachet de 10)', 2.25, 2), (3, 'F02', 'Boulon laiton 5 X 40 mm (sachet de 10)', 4.45, 2), (4, 'D01', 'Boulon laiton 5 X 40 mm (sachet de 10)', 4.40, 3), (5, 'A02', 'Meuleuse 125mm', 37.85, 1), (6, 'D03', 'Boulon acier zingué 4 X 40mm (sachet de 10)', 1.8, 3), (7, 'A03', 'Perceuse à colonne', 185.25, 1), (8, 'D04', 'Coffret meches à bois', 12.25, 3), (9, 'F03', 'offret meches plates', 6.25, 2), (10, 'F04', 'Fraises d encastrement', 8.14, 2);
+Query OK, 9 rows affected, 9 warnings (0.001 sec)
+Enregistrements: 9  Doublons: 0  Avertissements: 9
+
+MariaDB [compta]> insert into bon (id, numero, date_cmde, delai, id_fou) values (1, 01, '2024-10-22 11:17:01', '3 j
+ours', 1);
+ERROR 1265 (01000): Data truncated for column 'delai' at row 1
+MariaDB [compta]> desc bon
+    -> desc bon;
+ERROR 1064 (42000): Erreur de syntaxe près de 'desc bon' à la ligne 2
+MariaDB [compta]> desc bon;
++-----------+-----------+------+-----+---------+-------+
+| Field     | Type      | Null | Key | Default | Extra |
++-----------+-----------+------+-----+---------+-------+
+| id        | int(10)   | NO   | PRI | NULL    |       |
+| numero    | int(10)   | YES  |     | NULL    |       |
+| date_cmde | timestamp | YES  |     | NULL    |       |
+| delai     | int(10)   | YES  |     | NULL    |       |
+| id_fou    | int(10)   | YES  | MUL | NULL    |       |
++-----------+-----------+------+-----+---------+-------+
+5 rows in set (0.002 sec)
+
+MariaDB [compta]> insert into bon (id, numero, date_cmde, delai, id_fou) values (1, 01, '2024-10-22 11:17:01', '3 jours', 1);
+ERROR 1265 (01000)insert into bon (id, numero, date_cmde, delai, id_fou) values (1, 01, '2024-10-22 11:17:01', '3 jours', 1);
+ERROR 1265 (01000): Data truncated for column 'delai' at row 1
+MariaDB [compta]> insert into bon (id, numero, date_cmde, delai, id_fou) values (1, 01, '2024-10-22 11:17:01', 3, 1);
+Query OK, 1 row affected (0.001 sec)
+
+MariaDB [compta]> insert into compo (qte, id_art, id_bon) values (3, 1, 1), (4, 5, 1), (1, 7, 1);
+Query OK, 3 rows affected (0.001 sec)
+Enregistrements: 3  Doublons: 0  Avertissements: 0
+
+MariaDB [compta]>
