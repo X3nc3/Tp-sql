@@ -1,0 +1,5 @@
+SET sql_safe_updates = 0;
+
+DELETE FROM compo WHERE id_bon IN (SELECT id FROM bon where DATE_CMDE >= '2019-04-01' AND DATE_CMDE < '2019-05-01');
+
+DELETE FROM bon WHERE DATE_CMDE >= '2019-04-01' AND DATE_CMDE < '2019-05-01';
